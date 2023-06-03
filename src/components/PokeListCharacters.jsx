@@ -17,6 +17,7 @@ const PokeListCharacters = () => {
 
     useEffect(() => {
         setLoader(true)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         getPokemones().catch((e)=>{})
     }, [currentPage])
 
