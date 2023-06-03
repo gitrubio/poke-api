@@ -34,7 +34,10 @@ const PokeListCharacters = () => {
             const pokePromise = await Promise.allSettled(data.map(({ url }) => axios.get(url)))
             const pokeData = pokePromise.map(pokemon => pokemon.value.data)
             setPokemones(pokeData)
-            setLoader(false)
+            const loaderTime = setTimeout(()=>{
+                setLoader(false)
+                clearTimeout(loaderTime)
+            },1000)
         } catch (error) {
             console.log(error)
         }
