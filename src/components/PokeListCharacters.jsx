@@ -14,19 +14,19 @@ const PokeListCharacters = () => {
         previous: null
     })
 
+
+    useEffect(() => {
+        setLoader(true)
+        getPokemones().catch((e)=>{})
+    }, [currentPage])
+
+    
     const getPokemones = async () => {
         const { data } = await axios.get(currentPage)
         const { results, next, previous } = data;
         setPagination({next, previous })
         await dataPokemones(results)
     }
-
-    useEffect(() => {
-        setLoader(true)
-        getPokemones().then(()=>{}).catch((e)=>{})
-    }, [currentPage])
-
-    
 
     const dataPokemones = async (data) => {
         try {
