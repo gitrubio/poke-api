@@ -17,7 +17,7 @@ const PokeListCharacters = () => {
     const getPokemones = async () => {
         const { data } = await axios.get(pagination.current)
         const { results, next, previous } = data;
-        setPagination({ ...pagination, next, previous })
+        setPagination({next, previous })
         await dataPokemones(results)
     }
 
