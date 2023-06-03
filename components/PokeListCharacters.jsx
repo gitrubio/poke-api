@@ -19,12 +19,12 @@ const PokeListCharacters = () => {
         const { data } = await axios.get(pagination.current)
         const { results, next, previous } = data;
         setPagination({ current: pagination.current, next, previous })
-        dataPokemones(results)
+        await dataPokemones(results)
     }
 
     useEffect(() => {
         setLoader(true)
-        getPokemones()
+        getPokemones().then(()=>{}).catch((e)=>{})
     }, [pagination.current])
 
     
@@ -45,15 +45,15 @@ const PokeListCharacters = () => {
 
     return (
         <>
-            <Pagination pagination={pagination} setPagination={setPagination} />
+            <Pagination pagination={pagination} loading={loader} setPagination={setPagination} />
             {loader ?
-                <div style={{ width: '450px', height: '70vh', marginTop: '80px', }}>
-                    <img src={load} alt="" />
+                <div style={{ width: '450px', height: '70vh', marginTop: '80px', display : 'flex', justifyContent: 'center' }}>
+                    <div class="lds-facebook"><div></div><div></div><div></div></div>
                 </div>
                 :
                 <CardPokeCharacters pokemones={pokemones} />
             }
-            <Pagination pagination={pagination} setPagination={setPagination} />
+            <Pagination pagination={pagination} loading={loader} setPagination={setPagination} />
         </>
     )
 }
