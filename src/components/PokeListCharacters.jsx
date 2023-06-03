@@ -9,26 +9,19 @@ const PokeListCharacters = () => {
     const [pokemones, setPokemones] = useState([])
     const [loader, setLoader] = useState(false)
     const [pagination, setPagination] = useState({
+        current : "https://pokeapi.co/api/v2/pokemon",
         next: null,
         previous: null
     })
-
-
-    const previus= () => {
-        getPokemones(pagination.previous)
-    }
-    const next= () => {
-        getPokemones(pagination.next)
-    }
-
     useEffect(()=>{
-        getPokemones("https://pokeapi.co/api/v2/pokemon")
-    })
+        setLoader(true)
+        getPokemones()
+    },[pagination.current])
     
-    const getPokemones = async (Page) => {
-        const { data } = await axios.get(Page)
+    const getPokemones = async () => {
+        const { data } = await axios.get(pagination.current)
         const { results, next, previous } = data;
-        setPagination({next, previous })
+        setPagination({ ...pagination, next, previous })
         await dataPokemones(results)
     }
 
@@ -48,7 +41,7 @@ const PokeListCharacters = () => {
 
     return (
         <>
-            <Pagination pagination={pagination} loading={loader} setPagination={previus} />
+            <Pagination pagination={pagination} loading={loader} setPagination={setPagination} />
             {loader ?
                 <div style={{ width: '450px', height: '70vh', marginTop: '80px', display : 'flex', justifyContent: 'center' }}>
                     <div class="lds-facebook"><div></div><div></div><div></div></div>
@@ -56,7 +49,7 @@ const PokeListCharacters = () => {
                 :
                 <CardPokeCharacters pokemones={pokemones} />
             }
-            <Pagination pagination={pagination} loading={loader} setPagination={next} />
+            <Pagination pagination={pagination} loading={loader} setPagination={setPagination} />
         </>
     )
 }
