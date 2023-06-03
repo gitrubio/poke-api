@@ -43,7 +43,13 @@ const PokeListCharacters = () => {
     return (
         <>
             <Pagination pagination={pagination} setPagination={setPagination} />
-           
+            {loader ?
+                <div style={{ width: '450px', height: '70vh', marginTop: '80px', }}>
+                    <img src={load} alt="" />
+                </div>
+                :
+                <CardPokeCharacters pokemones={pokemones} />
+            }
             <Pagination pagination={pagination} setPagination={setPagination} />
         </>
     )
