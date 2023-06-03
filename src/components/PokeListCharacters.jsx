@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Pagination from './Pagination'
 import CardPokeCharacters from './CardPokeCharacters'
-import load from '../assets/ballLoading.gif'
 import './poke.css'
 
 const PokeListCharacters = () => {
@@ -18,7 +17,7 @@ const PokeListCharacters = () => {
     const getPokemones = async () => {
         const { data } = await axios.get(pagination.current)
         const { results, next, previous } = data;
-        setPagination({ current: pagination.current, next, previous })
+        setPagination({ ...pagination, next, previous })
         await dataPokemones(results)
     }
 
